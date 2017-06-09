@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Sales Accounts - Parallel Coordinates</title>
+    <link rel="stylesheet" type="text/css" href="parallel.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+  </head>
+
+  <body>
+  <div id="header">
+    
+    <button title="Zoom in on selected data" id="keep-data" disabled="disabled">Keep</button>
+    <button title="Remove selected data" id="exclude-data" disabled="disabled">Exclude</button>
+    <button title="Export data as CSV" id="export-data">Export</button>
+    <button title="Reset to Original Order" id="orig_order">Reset to Original Order</button>
+    <input id="control_scroll" type="checkbox" checked data-toggle="toggle">Fisheye needs CTRL key?
+    
+    <div class="controls">
+      Distortion:
+      <input type="text" id="distortion" value="4" style="width:24px"></input>
+      <strong id="rendered-count"></strong>/<strong id="selected-count"></strong><!--<strong id="data-count"></strong>-->
+      <div class="fillbar"><div id="selected-bar"><div id="rendered-bar">&nbsp;</div></div></div>
+      <strong id="opacity"></strong> opacity.
+      <button id="show-ticks">Show Ticks</button>
+      <button id="hide-ticks" disabled="disabled">Hide Ticks</button>
+      <button id="dark-theme">Dark</button>
+      <button id="light-theme" disabled="disabled">Light</button>
+    </div>
+    <div style="clear:both;"></div>
+  </div> <br><br>
+  <div id="chart">
+    <canvas id="background"></canvas>
+    <canvas id="foreground"></canvas>
+    <canvas id="highlight"></canvas>
+    <svg></svg>
+  </div>
+  <div id="wrap" style = "height:200px;">
+    <div class="third" id="controls">
+      <div class="little-box">
+        <p>
+          This parallel coordinates has a fisheye distortion for the widths between columns.
+        </p>
+        <p>
+          <em>To shift the focus, hold the CTRL key while moving the cursor along the chart 
+          (or toggle the need for CTRL key).</em>
+        </p>
+        <h5>Controls:</h5>
+        <p>
+          <strong>Brush</strong>: Drag vertically along an axis.<br/>
+          <strong>Remove Brush</strong>: Tap the axis background.<br/>
+          <strong>Reorder Axes</strong>: Drag a label horizontally.<br/>
+          <strong>Invert Axis</strong>: Tap an axis label.<br/>
+          <strong>Remove Axis</strong>: Drag axis label to edge of screen.<br/>
+          <strong>Change focus</strong>: CTRL + Mousemove.
+        </p>
+      </div>
+      <div class="little-box">
+        <p>
+        </p>
+      </div>
+    </div>
+    <div  class="third">
+      <small>
+        <!--Last rendered <strong id="render-speed"></strong> lines-->
+      </small>
+      <h5>Group (dynamically created clusters based on Wallet and Wallet Share)</h5>
+      <button id="unselect-all" >Unselect All Clusters</button>
+      <button id="select-all" style="display:none">Select All Clusters</button>
+      <p id="legend">
+      </p>
+    </div>
+    <div class="third">
+      <div id="sorted-by"></div>
+      <h5>Sample of 50 accounts <input type="text" id="search" placeholder="Search Accounts..."></input></h5>
+      <p id="food-list">
+      </p>
+    </div>
+    <div id="grid"></div>
+  </div>
+  </body>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+  <script src="d3.v2.js"></script>
+  <script src="underscore.js"></script>
+  <script src="fisheye.js"></script>
+  <script src="parallel.js"></script>
+  <script src="maketable.js"></script>
+  <script src="maketable2.js"></script>
+  
+</html>

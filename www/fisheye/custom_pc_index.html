@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Sales Accounts - Parallel Coordinates</title>
+    <link rel="stylesheet" type="text/css" href="parallel.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+  </head>
+
+  <body>
+  <div id="header">
+    
+    <button title="Zoom in on selected data" id="keep-data" disabled="disabled">Keep</button>
+    <button title="Remove selected data" id="exclude-data" disabled="disabled">Exclude</button>
+    <script>
+    // this import the csv after button is clicked, parse csv columns, and the custom_parallel.js can read and graph the data on initial()
+    var reader = new FileReader();
+    function loadFile() {      
+        var file = document.querySelector('input[type=file]').files[0];      
+        reader.addEventListener("load", parseFile, false);
+        if (file) {
+          reader.readAsText(file);
+        }      
+     }
+      
+    function parseFile(){
+        var data = d3.csv.parse(reader.result, function(d){
+          return d;   
+        });
+        initial(data,1); //call the function that initializes and draws the graph 
+    }
+    </script>
+    <button title="Reset to Original Order" id="orig_order">Reset to Original Order</button>
+    <input type="file" onchange="loadFile()" style="font-size:10px; vertical-align:top; width:140px;"/>
+    <input id="control_scroll" type="checkbox" checked data-toggle="toggle"><label style="top:2px; position:absolute;"> Fisheye needs CTRL key? </label>
+    
+    <div class="controls">
+      
+      Distortion:
+      
+      <input type="text" id="distortion" value="4" style="width:24px;"></input>
+      <strong id="rendered-count"></strong>/
+      <strong id="selected-count"></strong><!--<strong id="data-count"></strong>-->
+      <div class="fillbar"><div id="selected-bar"><div id="rendered-bar">&nbsp;</div></div></div>
+      <strong id="opacity" style="vertical-align:top;"></strong> opacity.
+      
+      <button id="show-ticks">Show Ticks</button>
+      <button id="hide-ticks" disabled="disabled">Hide Ticks</button>
+      <button id="dark-theme">Dark</button>
+      <button id="light-theme" disabled="disabled">Light</button>
+    </div>
+    <div style="clear:both;"></div>
+  </div> <br><br>
+  <div id="chart">
+    <canvas id="background"></canvas>
+    <canvas id="foreground"></canvas>
+    <canvas id="highlight"></canvas>
+    <svg></svg>
+  </div>
+  <div id="wrap" style = "height:200px;">
+    <input type="text" id="search" placeholder="Search Accounts..." style="visibility: hidden;"></input>
+    <button id="unhighlight_lines" style ="visibility:hidden; display:inline-block">Unhighlight Line(s)</button>
+    <div id="grid"></div>
+  </div>
+  </body>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+  <script src="d3.v2.js"></script>
+  <script src="underscore.js"></script>
+  <script src="fisheye.js"></script>
+  <script src="custom_parallel.js"></script>
+  <script src="maketable2.js"></script>
+  
+</html>
